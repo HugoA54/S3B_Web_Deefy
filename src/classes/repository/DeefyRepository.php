@@ -55,6 +55,12 @@ public function findAllPlaylists(): array
     return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 }
 
+public function findAllTrack(): array
+{
+    $stmt = $this->pdo->query("SELECT id, titre FROM track ORDER BY id ASC");
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+}
+
 
 public function findPlaylistById(int $id): ?Playlist {
     if (!$this->pdo) {
@@ -108,35 +114,68 @@ public function saveEmptyPlaylist(string $name): bool {
     return false;
 }
 
-public function saveTrack(
-    string $titre,
-    string $genre,
-    int $duree,
-    string $filename,
-    string $type,
-    ?string $artiste_album = null,
-    ?string $titre_album = null,
-    ?int $annee_album = null,
-    ?int $numero_album = null,
-    ?string $auteur_podcast = null,
-    ?string $date_podcast = null
-): bool {
+public function saveTrack(\iutnc\deefy\audio\tracks\AudioTrack $track): bool
+{
     if ($this->pdo) {
-        $stmt = $this->pdo->prepare(
-            "INSERT INTO track (
+        $stmt = $this->pdo->prepare("
+            INSERT INTO track (
                 titre, genre, duree, filename, type,
                 artiste_album, titre_album, annee_album, numero_album,
                 auteur_podcast, date_posdcast
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-        );
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+
+        $className = get_class($track);
+        if (str_contains($className, 'PodcastTrack')) {
+            $type = 'P';
+        } else {
+            $type = 'A';
+        }
+
+        $titre = $track->__get('titre');
+        $genre = $track->__get('genre');
+        $duree = $track->__get('duree');
+        $filename = $track->__get('fichier');
+
+        // 🔹 Champs spécifiques
+        $artiste_album = null;
+        $titre_album = null;
+        $annee_album = null;
+        $numero_album = null;
+        $auteur_podcast = null;
+        $date_posdcast = null;
+
+        if ($type === 'A') {
+            // AlbumTrack
+            $artiste_album = $track->__get('artiste') ?? null;
+            $titre_album = $track->__get('album') ?? null;
+            $annee_album = $track->__get('annee') ?? null;
+            $numero_album = $track->__get('numeroPiste') ?? null;
+        } else {
+            // PodcastTrack
+            $auteur_podcast = $track->__get('creator') ?? null;
+            $date_posdcast = $track->__get('date') ?? null;
+        }
+
         return $stmt->execute([
-            $titre, $genre, $duree, $filename, $type,
-            $artiste_album, $titre_album, $annee_album, $numero_album,
-            $auteur_podcast, $date_podcast
+            $titre,
+            $genre,
+            $duree,
+            $filename,
+            $type,
+            $artiste_album,
+            $titre_album,
+            $annee_album,
+            $numero_album,
+            $auteur_podcast,
+            $date_posdcast
         ]);
     }
     return false;
 }
+
+
 
     public function addTrackToPlaylist(int $trackId, int $playlistId, int $no_piste_dans_liste = 1): bool {
         if ($this->pdo) {

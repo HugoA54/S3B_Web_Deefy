@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace iutnc\deefy\audio\tracks;
 
 
-class PodcastTrack
+class PodcastTrack extends AudioTrack
 {
     private string $titre;
     private string $creator;
