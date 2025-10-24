@@ -6,11 +6,11 @@ session_start();
 
 use iutnc\deefy\audio\tracks\AlbumTrack;
 
-class AddPodcastTrackAction extends Action {
-
-    public function execute(): string {
-
-        // Si on affiche le formulaire
+class AddPodcastTrackAction extends Action
+{
+    public function execute(): string
+    {
+        // Affichage du formulaire
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             return <<<HTML
                 <form method="post" action="?action=add-track" enctype="multipart/form-data">
@@ -28,10 +28,13 @@ class AddPodcastTrackAction extends Action {
             HTML;
         }
 
+        // Traitement du formulaire
         elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
-               if(!isset($_SESSION['playlist'])) {
-            return "<p>La playlist n'existe pas.</p>";
-        }
+
+            if (!isset($_SESSION['playlist'])) {
+                return "<p>La playlist n'existe pas.</p>";
+            }
+
             $name = filter_var($_POST["track-name"], FILTER_SANITIZE_STRING);
             $id = filter_var($_POST["track-id"], FILTER_SANITIZE_NUMBER_INT);
 
@@ -48,18 +51,20 @@ class AddPodcastTrackAction extends Action {
                         return "Fichier interdit (.php).";
                     }
 
-                    $newName = "track_" . rand() . '.mp3';
-                    $destination = __DIR__ . '/../audio/' . $newName;
+                    $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/Web_projet/S3B_Web_Deefy/audio/';
+                    $newName = 'track_' . rand() . '.mp3';
+                    $destination = $uploadDir . $newName;
 
                     if (!move_uploaded_file($tmpName, $destination)) {
                         return "Erreur : impossible de sauvegarder le fichier.";
                     }
 
-                $audioPath = __DIR__ . '/../audio/' . $newName;
-                $t1 = new AlbumTrack($audioPath, (int)$id);
+                    $audioPath = 'audio/' . $newName;
 
-                        $_SESSION['playlist']->ajouterPiste($t1);
-                
+                    // Création de la piste avec chemin web
+                    $t1 = new AlbumTrack($audioPath, (int)$id);
+                    $_SESSION['playlist']->ajouterPiste($t1);
+
                     return <<<HTML
                         Track créée avec succès !<br>
                         <a href="?action=add-track">Ajouter encore une piste</a>

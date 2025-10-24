@@ -1,46 +1,56 @@
 <?php
 namespace iutnc\deefy\render;
 
-
-
 use iutnc\deefy\audio\lists\AudioList;
 
-class AudioListRenderer implements Renderer{
+class AudioListRenderer implements Renderer
+{
+    private AudioList $audioList;
 
-    private $audioList;
-        public function __construct(AudioList $audioList){
-            $this->audioList = $audioList;
-        }
-    
+    public function __construct(AudioList $audioList)
+    {
+        $this->audioList = $audioList;
+    }
 
     public function render(int $s): string
     {
-        $res = "";
-                $res .= "<b>";   
-         $res .= $this->audioList->__get('nom');
-                 $res .= "</b>";      
-        
-         $res .= "<br> Pistes: <br>";
+        $res = "<div class='audio-list'>";
+        $res .= "<h2>" . htmlspecialchars($this->audioList->__get('nom')) . "</h2>";
+        $res .= "<p><strong>Pistes :</strong></p>";
 
-        foreach($this->audioList->__get('pistes') as $piste){
-            $res .= "- ";
-            $res .= $piste->__get('titre'); 
-                    $res .= "<br>";   
+        foreach ($this->audioList->__get('pistes') as $piste) {
+            $titre = htmlspecialchars($piste->__get('titre'));
+            $duree = htmlspecialchars($piste->__get('duree') ?? '');
+            $artiste = htmlspecialchars($piste->__get('artiste') ?? '');
+            $fichier = htmlspecialchars($piste->__get('fichier') ?? '');
 
+            $res .= "
+            <div class='track-item' style='margin-bottom: 15px;'>
+                🎵 <strong>$titre</strong>" . 
+                (!empty($artiste) ? " – $artiste" : "") . 
+                (!empty($duree) ? " ({$duree}s)" : "") . "<br>
+                <audio controls preload='none' style='width: 300px; margin-top: 5px;'>
+                    <source src='$fichier' type='audio/mpeg'>
+                    Votre navigateur ne supporte pas la lecture audio.
+                </audio>
+            </div>";
         }
-        $res .= "Nombre de pistes: " . $this->audioList->__get('nbPistes');
-                $res .= " ";   
-        $res .= "Durée totale: " . $this->audioList->__get('dureeTotale') . " secondes";
+
+        $res .= "<p><strong>Nombre de pistes :</strong> " . $this->audioList->__get('nbPistes') . "</p>";
+        $res .= "<p><strong>Durée totale :</strong> " . $this->audioList->__get('dureeTotale') . " secondes</p>";
+        $res .= "</div>";
+
         return $res;
     }
 
-     public function renderCompact(): string{
-            return "Compact";
-     }
-     public function renderLong(): string{
-        return "Long";
-     }
-    
-}
+    public function renderCompact(): string
+    {
+        return "Compact";
+    }
 
+    public function renderLong(): string
+    {
+        return "Long";
+    }
+}
 ?>
