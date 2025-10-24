@@ -17,8 +17,6 @@ class AuthnProvider {
  if (!$row || !password_verify($password, $row['passwd'])) {
     throw new AuthnException("Email ou mot de passe incorrect.");
 }
-
-
 return [
     'email' => $row['email'],
     'role'  => $row['role']

@@ -12,6 +12,7 @@ use iutnc\deefy\action\DisplayPlaylistIDAction;
 use iutnc\deefy\action\bdAddTrackAction;
 use iutnc\deefy\action\AddEmptyPlaylistAction;
 use iutnc\deefy\action\AddTrackToPlaylistAction;
+use iutnc\deefy\action\ShowAllPlayListBD;
 
 class Dispatcher
 {
@@ -71,6 +72,11 @@ class Dispatcher
                 $action = new \iutnc\deefy\action\AddTrackToPlaylistAction();
                 $html = $action->execute();
                 break;
+                case 'display-all-playlists':
+    $action = new ShowAllPlayListBD();
+    $html = $action->execute();
+    break;
+
 
 
 
@@ -112,6 +118,7 @@ class Dispatcher
       </div>
         <div class="menu_avec_bd">
                         <p> Option avec base de données :</p>
+                <a href="?action=display-all-playlists">Afficher toutes les playlists</a><br>
                 <a href="?action=display-playlist">Chercher une playlist avec l'id</a><br>
                 <a href="?action=bd-add-track">Ajouter une track à la BD</a> <br>
                 <a href="?action=add-empty-playlist">Créer une playlist vide</a> <br>

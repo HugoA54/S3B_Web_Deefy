@@ -49,18 +49,12 @@ private function __construct() {
         return $this->pdo;
     }
 
-     public function findAllPlaylists(): array {
+public function findAllPlaylists(): array
+{
+    $stmt = $this->pdo->query("SELECT id, nom FROM playlist ORDER BY id ASC");
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+}
 
-        $playlists = [];
-        if ($this->pdo) {
-
-            $stmt = $this->pdo->query("SELECT * FROM playlist");
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $playlists[] = $row;
-            }
-        }
-        return $playlists;
-    }
 
 public function findPlaylistById(int $id): ?Playlist {
     if (!$this->pdo) {
