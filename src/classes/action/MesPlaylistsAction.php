@@ -11,13 +11,11 @@ class MesPlaylistsAction extends Action
 {
     public function execute(): string
     {
-        try {
-            // Vérifie qu’un utilisateur est bien connecté
+       
             $user = AuthnProvider::getSignedInUser();
             $repo = DeefyRepository::getInstance();
             $pdo = $repo->getPDO();
 
-            // On ne sélectionne que les playlists de cet utilisateur
             $stmt = $pdo->prepare("
                 SELECT p.id, p.nom
                 FROM playlist p
@@ -37,7 +35,6 @@ class MesPlaylistsAction extends Action
                 HTML;
             }
 
-            // Affichage
             $html = <<<HTML
                 <h2>Mes playlists</h2>
                 <table border="1" cellpadding="6" cellspacing="0">
@@ -63,8 +60,6 @@ class MesPlaylistsAction extends Action
             $html .= "</table><br><a href='?action=default'>Retour à l'accueil</a>";
             return $html;
 
-        } catch (\Throwable $e) {
-            return "<p class='error'>Erreur : " . htmlspecialchars($e->getMessage()) . "</p>";
-        }
+       
     }
 }

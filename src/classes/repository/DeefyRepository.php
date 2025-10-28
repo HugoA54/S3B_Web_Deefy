@@ -106,29 +106,25 @@ public function findPlaylistById(int $id): ?Playlist {
     return new Playlist($playlistData['nom'], $tracks);
 }
 
-public function saveEmptyPlaylist(string $name): bool
+public function saveEmptyPlaylist(string $name): ?int
 {
-    if (!$this->pdo) {
-        return false;
-    }
+    if (!$this->pdo) return null;
 
     $stmt = $this->pdo->prepare("INSERT INTO playlist (nom) VALUES (?)");
-    $success = $stmt->execute([$name]);
+    $ok = $stmt->execute([$name]);
+    if (!$ok) return null;
 
-    if (!$success) {
-        return false;
-    }
+    $playlistId = (int) $this->pdo->lastInsertId();
+
     if (isset($_SESSION['user'])) {
-$userId = $_SESSION['user']['id'];
-        $playlistId = $this->pdo->lastInsertId();
-
+        $userId = $_SESSION['user']['id'];
         $stmt = $this->pdo->prepare("INSERT INTO user2playlist (id_user, id_pl) VALUES (?, ?)");
-        $success = $stmt->execute([$userId, $playlistId]);
-
-        return $success;
+        $stmt->execute([$userId, $playlistId]);
     }
-    return true;
+
+    return $playlistId; 
 }
+
 
 
 public function saveTrack(\iutnc\deefy\audio\tracks\AudioTrack $track): bool

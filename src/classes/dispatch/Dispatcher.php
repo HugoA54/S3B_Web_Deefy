@@ -8,7 +8,8 @@ use iutnc\deefy\action\SigninAction;
 use iutnc\deefy\action\AddUserAction;
 use iutnc\deefy\action\DisplayPlaylistAction;
 use iutnc\deefy\action\AddTrackAction;
-
+use iutnc\deefy\action\DisplayCurrentPlaylistAction;
+use iutnc\deefy\action\AddEmptyPlaylistAction;
 
 class Dispatcher
 {
@@ -49,6 +50,14 @@ class Dispatcher
                 $actionInstance = new AddTrackAction();
                 $html = $actionInstance->execute();
                 break;
+            case 'display-current-playlist':
+                $actionInstance = new DisplayCurrentPlaylistAction();
+                $html = $actionInstance->execute();
+                break;
+            case 'add-empty-playlist':
+                $actionInstance = new AddEmptyPlaylistAction();
+                $html = $actionInstance->execute();
+                break;
 
 
         }
@@ -84,6 +93,8 @@ class Dispatcher
                 <div class="options">
         <a href="?action=default">Accueil</a> <br>
                 <a href="?action=display-playlists">Afficher toutes les playlists</a><br>
+                <a href="?action=add-empty-playlist">Créer une nouvelle playlist</a><br>
+                <a href="?action=display-current-playlist">Afficher la playlist courante</a><br>
               
     </div>
     </div>

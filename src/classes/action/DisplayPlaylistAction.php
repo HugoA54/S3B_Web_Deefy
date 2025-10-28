@@ -6,9 +6,11 @@ use iutnc\deefy\auth\Authz;
 use iutnc\deefy\repository\DeefyRepository;
 use iutnc\deefy\render\AudioListRenderer;
 
-class DisplayPlaylistAction extends Action {
+class DisplayPlaylistAction extends Action
+{
 
-    public function execute(): string {
+    public function execute(): string
+    {
 
         if (!isset($_GET['id'])) {
             return "<p>Aucune playlist spécifiée.</p><a href='?action=mes-playlists'>Retour</a>";
@@ -29,7 +31,6 @@ class DisplayPlaylistAction extends Action {
             HTML;
         }
 
-        // Récupère la playlist depuis la BDD
         $repo = DeefyRepository::getInstance();
         $playlist = $repo->findPlaylistById($playlistId);
 
@@ -47,7 +48,6 @@ class DisplayPlaylistAction extends Action {
             'nom' => $playlist->__get('nom')
         ];
 
-        // Affichage via le renderer
         $renderer = new AudioListRenderer($playlist);
         $html = $renderer->render(1);
 
