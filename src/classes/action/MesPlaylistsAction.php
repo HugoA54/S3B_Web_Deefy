@@ -53,6 +53,9 @@ class MesPlaylistsAction extends Action
                         <td>{$id}</td>
                         <td>{$nom}</td>
                         <td><a href="?action=display-playlist&id={$id}">Ouvrir</a></td>
+                        <td>
+                        <a href="?action=rename-playlist&id={$id}">Renommer</a> 
+                        </td>
                     </tr>
                 HTML;
         }

@@ -10,6 +10,9 @@ use iutnc\deefy\action\DisplayPlaylistAction;
 use iutnc\deefy\action\AddTrackAction;
 use iutnc\deefy\action\DisplayCurrentPlaylistAction;
 use iutnc\deefy\action\AddEmptyPlaylistAction;
+use iutnc\deefy\action\LogoutAction;
+use iutnc\deefy\action\RenamePlaylistAction;
+
 
 class Dispatcher
 {
@@ -58,10 +61,14 @@ class Dispatcher
                 $actionInstance = new AddEmptyPlaylistAction();
                 $html = $actionInstance->execute();
                 break;
-                case 'logout':
-    $action = new \iutnc\deefy\action\LogoutAction();
-    $html = $action->execute();
-    break;
+            case 'logout':
+                $action = new LogoutAction();
+                $html = $action->execute();
+                break;
+            case 'rename-playlist':
+                $action = new RenamePlaylistAction();
+                $html = $action->execute();
+                break;
 
 
 
