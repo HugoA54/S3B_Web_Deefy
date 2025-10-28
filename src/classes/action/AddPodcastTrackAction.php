@@ -2,7 +2,6 @@
 
 namespace iutnc\deefy\action;
 
-session_start();
 
 use iutnc\deefy\audio\tracks\AlbumTrack;
 
@@ -44,6 +43,7 @@ class AddPodcastTrackAction extends Action
                 $fileType = $file['type'];
 
                 if (substr($fileName, -4) === '.mp3' && $fileType === 'audio/mpeg') {
+                $fileName = filter_var($fileName, FILTER_SANITIZE_STRING);
 
                     if (str_ends_with($fileName, '.php')) {
                         return "Fichier interdit (.php).";

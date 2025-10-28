@@ -1,7 +1,6 @@
 <?php
 
 namespace iutnc\deefy\action;
-session_start();
 
 use iutnc\deefy\auth\Authz;
 use iutnc\deefy\repository\DeefyRepository;
@@ -15,8 +14,10 @@ class DisplayPlaylistIDAction extends Action {
             return $this->formulaire();
         }
         
-        $playlistId = (int) $_GET['id'];
-        
+        $playlistId = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
+        if ($playlistId <= 0) {
+    return "ID de playlist invalide.";
+}
         $authz = new Authz();
         if (!$authz->checkPlaylistOwner($playlistId)) {
             return <<<HTML

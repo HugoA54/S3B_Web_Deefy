@@ -14,9 +14,9 @@ class AddTrackToPlaylistAction extends Action
         $tracks = $repo->findAllTrack();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $trackId = (int)($_POST['track_id'] ?? 0);
-            $playlistId = (int)($_POST['playlist_id'] ?? 0);
-            $no_piste_dans_liste = (int)($_POST['no_piste_dans_liste'] ?? 1);
+            $trackId = filter_var($_POST['track_id'], FILTER_SANITIZE_NUMBER_INT);
+            $playlistId = filter_var($_POST['playlist_id'], FILTER_SANITIZE_NUMBER_INT);
+            $no_piste_dans_liste = filter_var($_POST['no_piste_dans_liste'], FILTER_SANITIZE_NUMBER_INT);
 
             if ($trackId <= 0 || $playlistId <= 0) {
                 $html .= "Vous devez sélectionner une track et une playlist valides";
@@ -33,16 +33,16 @@ class AddTrackToPlaylistAction extends Action
 
         $playlistOptions = "";
         foreach ($playlists as $pl) {
-            $id = htmlspecialchars($pl['id']);
-            $nom = htmlspecialchars($pl['nom']);
+            $id = $pl['id'];
+            $nom = $pl['nom'];
             $playlistOptions .= "<option value=\"$id\">$nom (ID $id)</option>";
         }
 
         $trackOptions = "";
         foreach ($tracks as $tr) {
-            $id = htmlspecialchars($tr['id']);
-            $titre = htmlspecialchars($tr['titre']);
-            $trackOptions .= "<option value=\"$id\">$titre (ID $id)</option>";
+                $id = $pl['id'];
+                $nom = $pl['titre'];
+                $playlistOptions .= "<option value=\"$id\">$titre (ID $id)</option>";
         }
 
         $html .= <<<HTML

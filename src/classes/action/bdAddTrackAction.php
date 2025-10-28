@@ -17,8 +17,8 @@ class bdAddTrackAction extends Action
                 return "<p>Erreur lors du transfert du fichier.</p>";
             }
 
-            $type = $_POST['type'] ?? 'music';
-            $file = $_FILES['userfile'];
+            $type = filter_var($_POST['type'], FILTER_SANITIZE_STRING);
+            $fileName = filter_var($file['name'], FILTER_SANITIZE_STRING);
 
             $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/Web_projet/S3B_Web_Deefy/audio/';
             $newName = 'track_' . rand() . '.mp3';

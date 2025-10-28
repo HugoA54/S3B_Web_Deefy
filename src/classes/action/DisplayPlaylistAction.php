@@ -1,6 +1,5 @@
 <?php
 namespace iutnc\deefy\action;
-session_start();
 
 use iutnc\deefy\render\AudioListRenderer;
 

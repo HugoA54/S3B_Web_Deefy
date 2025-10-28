@@ -33,8 +33,8 @@ class ShowAllPlayListBD extends Action
         HTML;
 
         foreach ($playlists as $pl) {
-            $id = htmlspecialchars((string)$pl['id']);
-            $nom = htmlspecialchars($pl['nom']);
+            $id = filter_var($pl['id'], FILTER_SANITIZE_NUMBER_INT);
+            $nom = filter_var($pl['nom'], FILTER_SANITIZE_STRING);
             $html .= <<<HTML
                 <tr>
                     <td>{$id}</td>

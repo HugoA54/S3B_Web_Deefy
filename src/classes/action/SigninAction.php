@@ -23,7 +23,7 @@ class SigninAction extends Action {
 
         elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $email = $_POST['username'] ?? '';
+            $email = filter_var($_POST['username'], FILTER_SANITIZE_EMAIL);
             $password = $_POST['password'] ?? '';
 
             try {

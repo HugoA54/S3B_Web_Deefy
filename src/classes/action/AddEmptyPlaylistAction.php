@@ -22,8 +22,7 @@ class AddEmptyPlaylistAction extends Action
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $name = trim($_POST['name'] ?? '');
-
+          $name = filter_var(trim($_POST['name']), FILTER_SANITIZE_STRING);
             if ($name === '') {
                 $html .= "Le nom de la playlist est obligatoire.";
             } else {
