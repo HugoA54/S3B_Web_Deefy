@@ -22,7 +22,7 @@ class RenamePlaylistAction extends Action
             $stmt = $pdo->prepare("UPDATE playlist SET nom = ? WHERE id = ?");
             $stmt->execute([$newName, $id]);
             $_SESSION['current_playlist']['nom'] = $newName;
-            return "<p>Playlist renommée en <strong>{$newName}</strong>.</p>
+            return "<p>Playlist renommée en {$newName}.</p>
                     <a href='?action=display-playlist&id={$id}'>Retour</a>";
         }
 

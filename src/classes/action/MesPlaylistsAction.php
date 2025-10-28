@@ -38,10 +38,11 @@ class MesPlaylistsAction extends Action
         $html = <<<HTML
                 <h2>Mes playlists</h2>
                 <table border="1" cellpadding="6" cellspacing="0">
-                    <tr style="background-color: #ddd;">
+                    <tr>
                         <th>ID</th>
                         <th>Nom</th>
                         <th>Action</th>
+                        <th>Gérer</th>
                     </tr>
             HTML;
 

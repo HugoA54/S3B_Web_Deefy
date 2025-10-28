@@ -86,9 +86,22 @@ class Dispatcher
         $this->renderPage($html);
     }
 
-    private function renderPage(string $html): void
-    {
-        $fullPage = <<<HTML
+private function renderPage(string $html): void
+{
+    if (isset($_SESSION['user'])) {
+        $email = $_SESSION['user']['email'];
+        $topLinks = <<<HTML
+            <a href="?action=user-stats">Profil</a> 
+            <a href="?action=logout">Déconnexion</a>
+        HTML;
+    } else {
+        $topLinks = <<<HTML
+            <a href="?action=signin">Connexion</a> 
+            <a href="?action=add-user">Inscription</a>
+        HTML;
+    }
+
+    $fullPage = <<<HTML
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -97,44 +110,37 @@ class Dispatcher
     <title>Deefy</title>
 </head>
 
-
 <body>
 <div class="top-links">
-    <a href="?action=signin">Connexion</a>
-    <a href="?action=add-user">Inscription</a>
-    <a href="?action=logout">Déconnexion</a>
-
+    {$topLinks}
 </div>
 
 <div class="header">
-       <h1> Deefy</h1>
-    <a href="?action=default">    <img src="images/logo.png" alt="Logo Deefy" class="logo"> </a>
+    <h1>Deefy</h1>
+    <a href="?action=default"><img src="images/logo.png" alt="Logo Deefy" class="logo"></a>
 </div>
 
-  <div class="options_menu">
-        <h2>Menu</h2> <br>
-                <div class="options">
-        <a href="?action=default">Accueil</a> <br>
-                <a href="?action=display-playlists">Afficher toutes les playlists</a><br>
-                <a href="?action=add-empty-playlist">Créer une nouvelle playlist</a><br>
-                <a href="?action=display-current-playlist">Afficher la playlist courante</a><br>
-                <a href="?action=add-track">Ajouter une piste à la playlist courante</a><br>
-                <a href="?action=user-stats">Mes statistiques</a>
+<div class="options_menu">
+    <h2>Menu</h2><br>
+    <div class="options">
+        <a href="?action=default">Accueil</a><br>
+        <a href="?action=display-playlists">Mes playlists</a><br>
+        <a href="?action=add-empty-playlist">Créer une nouvelle playlist</a><br>
+        <a href="?action=display-current-playlist">Afficher la playlist courante</a><br>
+        <a href="?action=add-track">Ajouter une piste à la playlist courante</a><br>
+    </div>
+</div>
 
+<div class="content">
+    {$html}
+</div>
 
-              
-    </div>
-    </div>
-    <div class="content">
-        $html
-    </div>
 </body>
 </html>
 HTML;
 
-        echo $fullPage;
-
-    }
+    echo $fullPage;
 }
-
+}
 ?>
+

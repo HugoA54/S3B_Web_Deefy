@@ -29,7 +29,7 @@ class AddUserAction extends Action {
 
             try {
                 AuthnProvider::register($email, $password);
-                return "<p>Inscription réussie pour <strong>$email</strong>. Vous pouvez maintenant vous connecter.</p>";
+                return "<p>Inscription réussie pour $email. Vous pouvez maintenant vous connecter.</p>";
             } catch (AuthnException $e) {
                 return$e->getMessage();
             } 

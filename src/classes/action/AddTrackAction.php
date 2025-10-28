@@ -56,7 +56,7 @@ class AddTrackAction extends Action
                 $trackId = $repo->getPDO()->lastInsertId();
                 $repo->addTrackToPlaylist((int) $trackId, (int) $playlistId, 1);
                 return <<<HTML
-                    <p>Piste ajoutée avec succès à la playlist <strong>{$playlistNom}</strong>.</p>
+                    <p>Piste ajoutée avec succès à la playlist {$playlistNom}.</p>
                     <a href="?action=display-playlist&id={$playlistId}">Retour à la playlist</a>
                 HTML;
             } else {

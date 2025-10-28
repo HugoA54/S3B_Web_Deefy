@@ -8,7 +8,7 @@ class UserStatsAction extends Action
 {
     public function execute(): string
     {
-        try {
+    
             $user = AuthnProvider::getSignedInUser();
             $repo = DeefyRepository::getInstance();
             $pdo = $repo->getPDO();
@@ -30,15 +30,13 @@ class UserStatsAction extends Action
 
             return <<<HTML
                 <h2>Statistiques utilisateur</h2>
-                <p><strong>Email :</strong> {$user['email']}</p>
-                <p><strong>Nombre de playlists :</strong> {$nbPlaylists}</p>
-                <p><strong>Nombre total de pistes :</strong> {$nbTracks}</p>
+                <p>Email : {$user['email']}</p>
+                <p>Nombre de playlists : {$nbPlaylists}</p>
+                <p>Nombre total de pistes : {$nbTracks}</p>
                 <a href="?action=mes-playlists">Mes playlists</a> |
                 <a href="?action=default">Accueil</a>
             HTML;
 
-        } catch (\Throwable $e) {
-            return "<p>Erreur : " . htmlspecialchars($e->getMessage()) . "</p>";
-        }
+       
     }
 }
