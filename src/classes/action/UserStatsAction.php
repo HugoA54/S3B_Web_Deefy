@@ -42,7 +42,7 @@ class UserStatsAction extends Action
                 <p>Email : {$user['email']}</p>
                 <p>Nombre de playlists : {$nbPlaylists}</p>
                 <p>Nombre total de pistes : {$nbTracks}</p>
-                <a href="?action=mes-playlists">Mes playlists</a> |
+                <a href="?action=display-playlists">Mes playlists</a> |
                 <a href="?action=default">Accueil</a>
             HTML;
 

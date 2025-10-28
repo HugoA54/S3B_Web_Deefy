@@ -18,7 +18,7 @@ class DisplayCurrentPlaylistAction extends Action
 
         $playlistInfo = $_SESSION['current_playlist'];
         $playlistId = (int) $playlistInfo['id'];
-        $playlistName = htmlspecialchars($playlistInfo['nom']);
+        $playlistName = $playlistInfo['nom'];
 
         $repo = DeefyRepository::getInstance();
         $playlist = $repo->findPlaylistById($playlistId);

@@ -30,7 +30,7 @@ class DeletePlaylistAction extends Action
 
         return <<<HTML
             <p>Playlist supprimée avec succès.</p>
-            <a href="?action=mes-playlists">Retour à mes playlists</a>
+            <a href="?action=display-playlists">Retour à mes playlists</a>
         HTML;
     }
 }

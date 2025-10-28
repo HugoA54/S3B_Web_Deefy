@@ -17,7 +17,7 @@ class AddTrackAction extends Action
         }
 
         $playlistId = $_SESSION['current_playlist']['id'];
-        $playlistNom = htmlspecialchars($_SESSION['current_playlist']['nom']);
+        $playlistNom = $_SESSION['current_playlist']['nom'];
 
         $html = "<h2>Ajouter une nouvelle piste à la playlist : {$playlistNom}</h2>";
 

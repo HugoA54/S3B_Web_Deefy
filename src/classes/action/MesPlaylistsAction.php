@@ -61,8 +61,8 @@ class MesPlaylistsAction extends Action
             HTML;
 
         foreach ($playlists as $pl) {
-            $id = htmlspecialchars((string) $pl['id']);
-            $nom = htmlspecialchars($pl['nom']);
+            $id = (string) $pl['id'];
+            $nom =$pl['nom'];
             $html .= <<<HTML
                     <tr>
                         <td>{$id}</td>

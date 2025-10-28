@@ -15,17 +15,17 @@ class AudioListRenderer implements Renderer
     public function render(int $s): string
     {
         $res = "<div class='audio-list'>";
-        $res .= "<h2>" . htmlspecialchars($this->audioList->__get('nom')) . "</h2>";
+        $res .= "<h2>" . ($this->audioList->__get('nom')) . "</h2>";
         $res .= "<p>Pistes :</p>";
 
         foreach ($this->audioList->__get('pistes') as $piste) {
-            $titre = htmlspecialchars($piste->__get('titre'));
-            $duree = htmlspecialchars($piste->__get('duree') ?? '');
+            $titre = ($piste->__get('titre'));
+            $duree = ($piste->__get('duree') ?? '');
     if ($piste instanceof \iutnc\deefy\audio\tracks\PodcastTrack) {
         $artiste = $piste->creator;
     } else {
         $artiste = $piste->artiste;
-    }            $fichier = htmlspecialchars($piste->__get('fichier') ?? '');
+    }            $fichier = ($piste->__get('fichier') ?? '');
 
             $res .= "
             <div class='track-item' style='margin-bottom: 15px;'>
