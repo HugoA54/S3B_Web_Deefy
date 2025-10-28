@@ -6,6 +6,7 @@ use iutnc\deefy\action\DefaultAction;
 use iutnc\deefy\action\MesPlaylistsAction;
 use iutnc\deefy\action\SigninAction;
 use iutnc\deefy\action\AddUserAction;
+use iutnc\deefy\action\DisplayPlaylistAction;
 
 
 class Dispatcher
@@ -27,7 +28,7 @@ class Dispatcher
                 $actionInstance = new DefaultAction();
                 $html = $actionInstance->execute();
                 break;
-            case 'display-playlist':
+            case 'display-playlists':
                 $actionInstance = new MesPlaylistsAction();
                 $html = $actionInstance->execute();
                 break;
@@ -37,6 +38,10 @@ class Dispatcher
                 break;
             case 'add-user':
                 $actionInstance = new AddUserAction();
+                $html = $actionInstance->execute();
+                break;
+            case 'display-playlist':
+                $actionInstance = new DisplayPlaylistAction();
                 $html = $actionInstance->execute();
                 break;
 
@@ -73,7 +78,7 @@ class Dispatcher
         <h2>Menu</h2> <br>
                 <div class="options">
         <a href="?action=default">Accueil</a> <br>
-                <a href="?action=display-playlist">Afficher toutes les playlists</a><br>
+                <a href="?action=display-playlists">Afficher toutes les playlists</a><br>
               
     </div>
     </div>
