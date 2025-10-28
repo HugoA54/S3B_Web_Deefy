@@ -17,7 +17,7 @@ class AddEmptyPlaylistAction extends Action
                     <input type="submit" value="Créer la playlist">
                 </form>
                 <br>
-                <a href="?action=mes-playlists">Retour à mes playlists</a>
+                <a href="?action=display-playlists">Retour à mes playlists</a>
             HTML;
         }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -47,7 +47,7 @@ class AddEmptyPlaylistAction extends Action
         <p>La playlist {$name} a été créée avec succès et est maintenant la playlist courante.</p>
         <a href="?action=display-playlist&id={$playlistId}">Voir la playlist</a> |
         <a href="?action=add-track">Ajouter une piste</a> |
-        <a href="?action=mes-playlists">Retour à mes playlists</a>
+        <a href="?action=display-playlists">Retour à mes playlists</a>
     HTML;
                 }
                 return "<p>Erreur lors de la création de la playlist.</p>";

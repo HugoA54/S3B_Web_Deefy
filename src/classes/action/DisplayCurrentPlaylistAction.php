@@ -11,7 +11,7 @@ class DisplayCurrentPlaylistAction extends Action
         if (!isset($_SESSION['current_playlist'])) {
             return <<<HTML
                 <p>Aucune playlist courante n’est sélectionnée.</p>
-                <a href="?action=mes-playlists">Voir mes playlists</a> |
+                <a href="?action=display-playlists">Voir mes playlists</a> |
                 <a href="?action=add-empty-playlist">Créer une playlist</a>
             HTML;
         }
@@ -26,7 +26,7 @@ class DisplayCurrentPlaylistAction extends Action
         if ($playlist === null) {
             return <<<HTML
                 <p>La playlist courante (ID {$playlistId}) n’existe plus en base.</p>
-                <a href="?action=mes-playlists">Retour à mes playlists</a>
+                <a href="?action=display-playlists">Retour à mes playlists</a>
             HTML;
         }
         $renderer = new AudioListRenderer($playlist);
@@ -36,7 +36,7 @@ class DisplayCurrentPlaylistAction extends Action
         $html .= <<<HTML
             <br>
             <a href="?action=add-track">Ajouter une piste</a> |
-            <a href="?action=mes-playlists">Mes playlists</a> |
+            <a href="?action=display-playlists">Mes playlists</a> |
             <a href="?action=default">Accueil</a>
         HTML;
 

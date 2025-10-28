@@ -13,7 +13,7 @@ class DisplayPlaylistAction extends Action
     {
 
         if (!isset($_GET['id'])) {
-            return "<p>Aucune playlist spécifiée.</p><a href='?action=mes-playlists'>Retour</a>";
+            return "<p>Aucune playlist spécifiée.</p><a href='?action=display-playlists'>Retour</a>";
         }
 
         $playlistId = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
@@ -27,7 +27,7 @@ class DisplayPlaylistAction extends Action
                 <div class='error'>
                     Accès refusé : vous n'avez pas les droits pour afficher cette playlist.
                 </div>
-                <a href='?action=mes-playlists'>Retour à mes playlists</a>
+                <a href='?action=display-playlists'>Retour à mes playlists</a>
             HTML;
         }
 
@@ -39,7 +39,7 @@ class DisplayPlaylistAction extends Action
                 <div class='error'>
                     Playlist non trouvée (ID: {$playlistId})
                 </div>
-                <a href='?action=mes-playlists'>Retour</a>
+                <a href='?action=display-playlists'>Retour</a>
             HTML;
         }
 
@@ -54,7 +54,7 @@ class DisplayPlaylistAction extends Action
         $html .= <<<HTML
             <br><br>
             <a href="?action=add-track">Ajouter une piste à cette playlist</a> |
-            <a href="?action=mes-playlists">Retour à mes playlists</a> |
+            <a href="?action=display-playlists">Retour à mes playlists</a> |
             <a href="?action=default">Accueil</a>
         HTML;
 

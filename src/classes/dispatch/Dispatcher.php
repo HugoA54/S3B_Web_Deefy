@@ -95,6 +95,8 @@ class Dispatcher
                 <a href="?action=display-playlists">Afficher toutes les playlists</a><br>
                 <a href="?action=add-empty-playlist">Créer une nouvelle playlist</a><br>
                 <a href="?action=display-current-playlist">Afficher la playlist courante</a><br>
+                <a href="?action=add-track">Ajouter une piste à la playlist courante</a><br>
+
               
     </div>
     </div>

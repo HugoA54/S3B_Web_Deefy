@@ -5,9 +5,11 @@ namespace iutnc\deefy\action;
 use iutnc\deefy\auth\AuthnProvider;
 use iutnc\deefy\exception\AuthnException;
 
-class SigninAction extends Action {
+class SigninAction extends Action
+{
 
-    public function execute(): string {
+    public function execute(): string
+    {
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             return <<<HTML
@@ -19,9 +21,7 @@ class SigninAction extends Action {
                 <input type="submit" value="Se connecter">
             </form>
             HTML;
-        }
-
-        elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $email = filter_var($_POST['username'], FILTER_SANITIZE_EMAIL);
             $password = $_POST['password'] ?? '';
@@ -32,10 +32,9 @@ class SigninAction extends Action {
                 $_SESSION['user'] = $user;
 
                 return "<p>Authentification réussie. Bienvenue, {$user['email']} !</p>";
-            } 
- catch (AuthnException $e) {
-    return "{$e->getMessage()}";
-}
+            } catch (AuthnException $e) {
+                return "{$e->getMessage()}";
+            }
 
         }
         return "<p>Méthode HTTP non supportée. Utilisez GET ou POST.</p>";

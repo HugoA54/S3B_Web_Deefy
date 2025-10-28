@@ -12,7 +12,7 @@ class AddTrackAction extends Action
         if (!isset($_SESSION['current_playlist'])) {
             return <<<HTML
                 <p>Aucune playlist courante n’est sélectionnée.</p>
-                <a href="?action=mes-playlists">Voir mes playlists</a>
+                <a href="?action=display-playlists">Voir mes playlists</a>
             HTML;
         }
 
@@ -54,7 +54,7 @@ class AddTrackAction extends Action
 
             if ($ok) {
                 $trackId = $repo->getPDO()->lastInsertId();
-                $repo->addTrackToPlaylist((int)$trackId, (int)$playlistId, 1);
+                $repo->addTrackToPlaylist((int) $trackId, (int) $playlistId, 1);
                 return <<<HTML
                     <p>Piste ajoutée avec succès à la playlist <strong>{$playlistNom}</strong>.</p>
                     <a href="?action=display-playlist&id={$playlistId}">Retour à la playlist</a>
