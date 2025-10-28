@@ -8,6 +8,17 @@ class AddEmptyPlaylistAction extends Action
 {
     public function execute(): string
     {
+
+       if (!isset($_SESSION['user'])) {
+    return <<<HTML
+        <div class="info-message">
+            <p>Vous devez être connecté pour accéder à cette fonctionnalité.</p>
+            <a href="?action=signin" class="btn">Se connecter</a>
+            <a href="?action=add-user" class="btn">Créer un compte</a>
+        </div>
+    HTML;
+}
+
         $html = "<h2>Créer une playlist vide</h2>";
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             return <<<HTML

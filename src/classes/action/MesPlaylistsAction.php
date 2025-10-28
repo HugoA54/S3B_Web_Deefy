@@ -11,8 +11,22 @@ class MesPlaylistsAction extends Action
 {
     public function execute(): string
     {
+ if (!isset($_SESSION['user'])) {
+    return <<<HTML
+        <div class="info-message">
+            <p>Vous devez être connecté pour accéder à cette fonctionnalité.</p>
+            <a href="?action=signin" class="btn">Se connecter</a> 
+            <a href="?action=add-user" class="btn">Créer un compte</a>
+        </div>
+    HTML;
+}
+
 
         $user = AuthnProvider::getSignedInUser();
+     
+
+
+
         $repo = DeefyRepository::getInstance();
         $pdo = $repo->getPDO();
 

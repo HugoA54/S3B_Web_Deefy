@@ -117,4 +117,32 @@ h2 {
     color: gray;
 }
 
+.info-message {
+    background-color: #a5d8ff; 
+    border: 2px solid #1e88e5; 
+    padding: 18px 28px;
+    border-radius: 14px;
+    width: fit-content;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.info-message p {
+    margin: 0 0 14px 0;
+}
+
+.info-message .btn {
+    background-color: #1e88e5;
+    color: white;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-weight: 500;
+    margin: 0 8px;
+}
+
+.info-message .btn:hover {
+    background-color: #1565c0;
+}
+
+
 

@@ -8,12 +8,21 @@ class UserStatsAction extends Action
 {
     public function execute(): string
     {
-    
-            $user = AuthnProvider::getSignedInUser();
-            $repo = DeefyRepository::getInstance();
-            $pdo = $repo->getPDO();
 
-            $stmt = $pdo->prepare("
+        if (!isset($_SESSION['user'])) {
+            return <<<HTML
+        <div class="info-message">
+            <p>Vous devez être connecté pour accéder à cette fonctionnalité.</p>
+            <a href="?action=signin" class="btn">Se connecter</a> 
+            <a href="?action=add-user" class="btn">Créer un compte</a>
+        </div>
+    HTML;
+        }
+        $user = AuthnProvider::getSignedInUser();
+        $repo = DeefyRepository::getInstance();
+        $pdo = $repo->getPDO();
+
+        $stmt = $pdo->prepare("
                 SELECT 
                     COUNT(DISTINCT p.id) AS nb_playlists,
                     COUNT(pt.id_track) AS nb_tracks
@@ -22,13 +31,13 @@ class UserStatsAction extends Action
                 JOIN user2playlist u2p ON u2p.id_pl = p.id
                 WHERE u2p.id_user = ?
             ");
-            $stmt->execute([$user['id']]);
-            $data = $stmt->fetch(\PDO::FETCH_ASSOC);
+        $stmt->execute([$user['id']]);
+        $data = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-            $nbPlaylists = (int) $data['nb_playlists'];
-            $nbTracks = (int) $data['nb_tracks'];
+        $nbPlaylists = (int) $data['nb_playlists'];
+        $nbTracks = (int) $data['nb_tracks'];
 
-            return <<<HTML
+        return <<<HTML
                 <h2>Statistiques utilisateur</h2>
                 <p>Email : {$user['email']}</p>
                 <p>Nombre de playlists : {$nbPlaylists}</p>
@@ -37,6 +46,6 @@ class UserStatsAction extends Action
                 <a href="?action=default">Accueil</a>
             HTML;
 
-       
+
     }
 }
