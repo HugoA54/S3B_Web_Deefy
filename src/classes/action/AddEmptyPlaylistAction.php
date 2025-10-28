@@ -2,43 +2,58 @@
 namespace iutnc\deefy\action;
 
 use iutnc\deefy\repository\DeefyRepository;
+use iutnc\deefy\auth\AuthnProvider;
 
 class AddEmptyPlaylistAction extends Action
 {
-    public function execute(): string
-    {
+    public function execute(): string  {
         $html = "<h2>Créer une playlist vide</h2>";
-
-        if($_SERVER['REQUEST_METHOD'] === 'GET') {
-              $html .= <<<HTML
-        <form method="POST" action="?action=add-empty-playlist">
-            <label for="name">Nom de la playlist :</label><br>
-            <input type="text" name="name" id="name" required><br><br>
-            <input type="submit" value="Créer la playlist">
-        </form>
-        HTML;
-
-        return $html;
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            return <<<HTML
+                <form method="POST" action="?action=add-empty-playlist">
+                    <label for="name">Nom de la playlist :</label><br>
+                    <input type="text" name="name" id="name" required><br><br>
+                    <input type="submit" value="Créer la playlist">
+                </form>
+                <br>
+                <a href="?action=mes-playlists">Retour à mes playlists</a>
+            HTML;
         }
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-          $name = filter_var(trim($_POST['name']), FILTER_SANITIZE_STRING);
+            $name = filter_var(trim($_POST['name']), FILTER_SANITIZE_STRING);
+
             if ($name === '') {
-                $html .= "Le nom de la playlist est obligatoire.";
-            } else {
+                return "<p>Le nom de la playlist est obligatoire.</p>";
+            }
+
+   
+                $user = AuthnProvider::getSignedInUser();
                 $repo = DeefyRepository::getInstance();
+                $pdo = $repo->getPDO();
+
+                // Création de la playlist
                 $ok = $repo->saveEmptyPlaylist($name);
 
                 if ($ok) {
-                    $html .= $name . "</strong> créée avec succès.</p>";
+                    $playlistId = $pdo->lastInsertId();
+                    $_SESSION['current_playlist'] = [
+                        'id' => $playlistId,
+                        'nom' => $name
+                    ];
+                    return <<<HTML
+                        <p>La playlist <strong>{$name}</strong> a été créée avec succès et est maintenant la playlist courante.</p>
+                        <a href="?action=display-playlist&id={$playlistId}">Voir la playlist</a> |
+                        <a href="?action=add-track">Ajouter une piste</a> |
+                        <a href="?action=mes-playlists">Retour à mes playlists</a>
+                    HTML;
                 } else {
-                    $html .= "Erreur lors de la création de la playlist";
+                    return "<p>Erreur lors de la création de la playlist.</p>";
                 }
-            }
+
+          
         }
+                   return $html;
 
-  
-
-        return $html;
     }
+
 }

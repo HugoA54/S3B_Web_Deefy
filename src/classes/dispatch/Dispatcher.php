@@ -7,6 +7,7 @@ use iutnc\deefy\action\MesPlaylistsAction;
 use iutnc\deefy\action\SigninAction;
 use iutnc\deefy\action\AddUserAction;
 use iutnc\deefy\action\DisplayPlaylistAction;
+use iutnc\deefy\action\AddTrackAction;
 
 
 class Dispatcher
@@ -42,6 +43,10 @@ class Dispatcher
                 break;
             case 'display-playlist':
                 $actionInstance = new DisplayPlaylistAction();
+                $html = $actionInstance->execute();
+                break;
+            case 'add-track':
+                $actionInstance = new AddTrackAction();
                 $html = $actionInstance->execute();
                 break;
 
