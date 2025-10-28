@@ -4,6 +4,13 @@
     box-sizing: border-box;
 }
 
+.content {
+    margin-left: 40%;
+        margin-top: 10%;
+    position: fixed;
+    text-align: center;
+    flex-grow: 1;
+}
 body {
     font-family: Arial;
     background-color: #f2f2f2;
@@ -85,8 +92,7 @@ h2 {
     padding-bottom: 5px;
 }
 
-.menu_sans_bd a,
-.menu_avec_bd a {
+.options a{
     display: block;
     margin: 5px 0;
     color: #0078ff;
@@ -94,22 +100,21 @@ h2 {
     font-weight: bold;
 }
 
-.menu_sans_bd a:hover,
-.menu_avec_bd a:hover {
+
+.options a:hover {
     color: white;
     background-color: #0078ff;
     border-radius: 6px;
     padding: 5px 0;
 }
 
-.menu_avec_bd {
-    margin-top: 25px;
-    padding-top: 20px;
-}
-.content {
-    margin-left: 40%;
-    margin-top: 10%;
-    position: fixed;
+
+
+
+.accueil {
     text-align: center;
-    flex-grow: 1;
+    font-size: small;
+    color: gray;
 }
+
+

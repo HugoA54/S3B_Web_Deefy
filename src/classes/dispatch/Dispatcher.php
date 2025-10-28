@@ -3,16 +3,10 @@
 namespace iutnc\deefy\dispatch;
 
 use iutnc\deefy\action\DefaultAction;
-use iutnc\deefy\action\DisplayPlaylistAction;
-use iutnc\deefy\action\AddPlaylistAction;
-use iutnc\deefy\action\AddPodcastTrackAction;
-use iutnc\deefy\action\AddUserAction;
+use iutnc\deefy\action\MesPlaylistsAction;
 use iutnc\deefy\action\SigninAction;
-use iutnc\deefy\action\DisplayPlaylistIDAction;
-use iutnc\deefy\action\bdAddTrackAction;
-use iutnc\deefy\action\AddEmptyPlaylistAction;
-use iutnc\deefy\action\AddTrackToPlaylistAction;
-use iutnc\deefy\action\ShowAllPlayListBD;
+use iutnc\deefy\action\AddUserAction;
+
 
 class Dispatcher
 {
@@ -33,51 +27,18 @@ class Dispatcher
                 $actionInstance = new DefaultAction();
                 $html = $actionInstance->execute();
                 break;
-
-            case 'playlist':
-                $actionInstance = new DisplayPlaylistAction();
-                $html = $actionInstance->execute();
-                break;
-
-            case 'add-playlist':
-                $actionInstance = new AddPlaylistAction();
-                $html = $actionInstance->execute();
-                break;
-
-            case 'add-track':
-                $actionInstance = new AddPodcastTrackAction();
-                $html = $actionInstance->execute();
-                break;
-            case 'add-user':
-                $actionInstance = new AddUserAction();
+            case 'display-playlist':
+                $actionInstance = new MesPlaylistsAction();
                 $html = $actionInstance->execute();
                 break;
             case 'signin':
                 $actionInstance = new SigninAction();
                 $html = $actionInstance->execute();
                 break;
-            case 'display-playlist':
-                $actionInstance = new DisplayPlaylistIDAction();
+            case 'add-user':
+                $actionInstance = new AddUserAction();
                 $html = $actionInstance->execute();
                 break;
-            case 'bd-add-track':
-                $actionInstance = new bdAddTrackAction();
-                $html = $actionInstance->execute();
-                break;
-            case 'add-empty-playlist':
-                $action = new AddEmptyPlaylistAction();
-                $html = $action->execute();
-                break;
-            case 'add-track-to-playlist':
-                $action = new \iutnc\deefy\action\AddTrackToPlaylistAction();
-                $html = $action->execute();
-                break;
-                case 'display-all-playlists':
-    $action = new ShowAllPlayListBD();
-    $html = $action->execute();
-    break;
-
-
 
 
         }
@@ -104,27 +65,17 @@ class Dispatcher
 </div>
 
 <div class="header">
-    <h1>Deefy</h1>
-        <img src="images/logo.png" alt="Logo Deefy" class="logo">
+       <h1> Deefy</h1>
+    <a href="?action=default">    <img src="images/logo.png" alt="Logo Deefy" class="logo"> </a>
 </div>
 
   <div class="options_menu">
-        <h2>Menu</h2>
-        <div class="menu_sans_bd">
-            <p> Option sans base de données :</p>
-            <a href="?action=add-playlist">Créer une playlist</a><br>
-            <a href="?action=add-track">Ajouter une piste</a><br>
-            <a href="?action=playlist">Afficher la playlist</a><br>
-      </div>
-        <div class="menu_avec_bd">
-                        <p> Option avec base de données :</p>
-                <a href="?action=display-all-playlists">Afficher toutes les playlists</a><br>
-                <a href="?action=display-playlist">Chercher une playlist avec l'id</a><br>
-                <a href="?action=bd-add-track">Ajouter une track à la BD</a> <br>
-                <a href="?action=add-empty-playlist">Créer une playlist vide</a> <br>
-                <a href="?action=add-track-to-playlist">Ajouter une track à une playlist</a>
-      </div>
-         <br>
+        <h2>Menu</h2> <br>
+                <div class="options">
+        <a href="?action=default">Accueil</a> <br>
+                <a href="?action=display-playlist">Afficher toutes les playlists</a><br>
+              
+    </div>
     </div>
     <div class="content">
         $html
