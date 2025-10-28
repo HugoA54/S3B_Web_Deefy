@@ -46,7 +46,6 @@ class bdAddTrackAction extends Action
             }
         }
 
-        // 🔹 Formulaire simple
         $html .= <<<HTML
         <form method="POST" action="?action=bd-add-track" enctype="multipart/form-data">
             <label for="type">Type de piste :</label>

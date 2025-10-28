@@ -1,7 +1,6 @@
 <?php
 
 namespace iutnc\deefy\action;
-session_start();
 
 use iutnc\deefy\auth\AuthnProvider;
 use iutnc\deefy\exception\AuthnException;
@@ -39,8 +38,6 @@ class SigninAction extends Action {
 }
 
         }
-
-        // --- 3️⃣ Si autre méthode HTTP ---
         return "<p>Méthode HTTP non supportée. Utilisez GET ou POST.</p>";
     }
 }

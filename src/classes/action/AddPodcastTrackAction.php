@@ -10,7 +10,6 @@ class AddPodcastTrackAction extends Action
 {
     public function execute(): string
     {
-        // Affichage du formulaire
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             return <<<HTML
                 <form method="post" action="?action=add-track" enctype="multipart/form-data">
@@ -28,7 +27,6 @@ class AddPodcastTrackAction extends Action
             HTML;
         }
 
-        // Traitement du formulaire
         elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if (!isset($_SESSION['playlist'])) {
@@ -61,7 +59,6 @@ class AddPodcastTrackAction extends Action
 
                     $audioPath = 'audio/' . $newName;
 
-                    // Création de la piste avec chemin web
                     $t1 = new AlbumTrack($audioPath, (int)$id);
                     $_SESSION['playlist']->ajouterPiste($t1);
 

@@ -21,8 +21,11 @@ class AudioListRenderer implements Renderer
         foreach ($this->audioList->__get('pistes') as $piste) {
             $titre = htmlspecialchars($piste->__get('titre'));
             $duree = htmlspecialchars($piste->__get('duree') ?? '');
-            $artiste = htmlspecialchars($piste->__get('artiste') ?? '');
-            $fichier = htmlspecialchars($piste->__get('fichier') ?? '');
+    if ($piste instanceof \iutnc\deefy\audio\tracks\PodcastTrack) {
+        $artiste = $piste->creator;
+    } else {
+        $artiste = $piste->artiste;
+    }            $fichier = htmlspecialchars($piste->__get('fichier') ?? '');
 
             $res .= "
             <div class='track-item' style='margin-bottom: 15px;'>

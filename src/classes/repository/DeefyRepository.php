@@ -3,6 +3,7 @@
 
 
 namespace iutnc\deefy\repository;
+session_start();
 
 use iutnc\deefy\audio\tracks\AlbumTrack;
 use PDO;
@@ -89,7 +90,6 @@ public function findPlaylistById(int $id): ?Playlist {
     $tracks = [];
     foreach ($tracksData as $trackData) {
             if ($trackData['type'] === 'A') {
-                // Créer un AlbumTrack
                 $track = new AlbumTrack(
                     $trackData['filename'],
                     $trackData['numero_album'] ?? 0
@@ -106,13 +106,30 @@ public function findPlaylistById(int $id): ?Playlist {
     return new Playlist($playlistData['nom'], $tracks);
 }
 
-public function saveEmptyPlaylist(string $name): bool {
-    if ($this->pdo) {
-        $stmt = $this->pdo->prepare("INSERT INTO playlist (nom) VALUES (?)");
-        return $stmt->execute([$name]);
+public function saveEmptyPlaylist(string $name): bool
+{
+    if (!$this->pdo) {
+        return false;
     }
-    return false;
+
+    $stmt = $this->pdo->prepare("INSERT INTO playlist (nom) VALUES (?)");
+    $success = $stmt->execute([$name]);
+
+    if (!$success) {
+        return false;
+    }
+    if (isset($_SESSION['user'])) {
+$userId = $_SESSION['user']['id'];
+        $playlistId = $this->pdo->lastInsertId();
+
+        $stmt = $this->pdo->prepare("INSERT INTO user2playlist (id_user, id_pl) VALUES (?, ?)");
+        $success = $stmt->execute([$userId, $playlistId]);
+
+        return $success;
+    }
+    return true;
 }
+
 
 public function saveTrack(\iutnc\deefy\audio\tracks\AudioTrack $track): bool
 {
@@ -138,7 +155,6 @@ public function saveTrack(\iutnc\deefy\audio\tracks\AudioTrack $track): bool
         $duree = $track->__get('duree');
         $filename = $track->__get('fichier');
 
-        // 🔹 Champs spécifiques
         $artiste_album = null;
         $titre_album = null;
         $annee_album = null;
@@ -147,13 +163,11 @@ public function saveTrack(\iutnc\deefy\audio\tracks\AudioTrack $track): bool
         $date_posdcast = null;
 
         if ($type === 'A') {
-            // AlbumTrack
             $artiste_album = $track->__get('artiste') ?? null;
             $titre_album = $track->__get('album') ?? null;
             $annee_album = $track->__get('annee') ?? null;
             $numero_album = $track->__get('numeroPiste') ?? null;
         } else {
-            // PodcastTrack
             $auteur_podcast = $track->__get('creator') ?? null;
             $date_posdcast = $track->__get('date') ?? null;
         }
