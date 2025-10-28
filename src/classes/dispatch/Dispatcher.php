@@ -13,6 +13,7 @@ use iutnc\deefy\action\AddEmptyPlaylistAction;
 use iutnc\deefy\action\LogoutAction;
 use iutnc\deefy\action\RenamePlaylistAction;
 use iutnc\deefy\action\DeletePlaylistAction;
+use iutnc\deefy\action\UserStatsAction;
 
 
 class Dispatcher
@@ -74,6 +75,10 @@ class Dispatcher
                 $action = new DeletePlaylistAction();
                 $html = $action->execute();
                 break;
+            case 'user-stats':
+                $action = new UserStatsAction();
+                $html = $action->execute();
+                break;
 
 
         }
@@ -114,6 +119,8 @@ class Dispatcher
                 <a href="?action=add-empty-playlist">Créer une nouvelle playlist</a><br>
                 <a href="?action=display-current-playlist">Afficher la playlist courante</a><br>
                 <a href="?action=add-track">Ajouter une piste à la playlist courante</a><br>
+                <a href="?action=user-stats">Mes statistiques</a>
+
 
               
     </div>
