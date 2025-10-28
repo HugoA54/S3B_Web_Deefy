@@ -58,6 +58,11 @@ class Dispatcher
                 $actionInstance = new AddEmptyPlaylistAction();
                 $html = $actionInstance->execute();
                 break;
+                case 'logout':
+    $action = new \iutnc\deefy\action\LogoutAction();
+    $html = $action->execute();
+    break;
+
 
 
         }
@@ -81,6 +86,8 @@ class Dispatcher
 <div class="top-links">
     <a href="?action=signin">Connexion</a>
     <a href="?action=add-user">Inscription</a>
+    <a href="?action=logout">Déconnexion</a>
+
 </div>
 
 <div class="header">
