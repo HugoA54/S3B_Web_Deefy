@@ -53,9 +53,11 @@ class MesPlaylistsAction extends Action
                         <td>{$id}</td>
                         <td>{$nom}</td>
                         <td><a href="?action=display-playlist&id={$id}">Ouvrir</a></td>
-                        <td>
-                        <a href="?action=rename-playlist&id={$id}">Renommer</a> 
+                         <td>
+                        <a href="?action=rename-playlist&id={$id}">Renommer</a> |
+                        <a href="?action=delete-playlist&id={$id}" onclick="return confirm('Supprimer cette playlist ?');">Supprimer</a>
                         </td>
+
                     </tr>
                 HTML;
         }

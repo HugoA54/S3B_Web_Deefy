@@ -12,6 +12,7 @@ use iutnc\deefy\action\DisplayCurrentPlaylistAction;
 use iutnc\deefy\action\AddEmptyPlaylistAction;
 use iutnc\deefy\action\LogoutAction;
 use iutnc\deefy\action\RenamePlaylistAction;
+use iutnc\deefy\action\DeletePlaylistAction;
 
 
 class Dispatcher
@@ -69,7 +70,10 @@ class Dispatcher
                 $action = new RenamePlaylistAction();
                 $html = $action->execute();
                 break;
-
+            case 'delete-playlist':
+                $action = new DeletePlaylistAction();
+                $html = $action->execute();
+                break;
 
 
         }
