@@ -38,12 +38,14 @@ class UserStatsAction extends Action
         $nbTracks = (int) $data['nb_tracks'];
 
         return <<<HTML
+                                <div class="info-message">
                 <h2>Statistiques utilisateur</h2>
                 <p>Email : {$user['email']}</p>
                 <p>Nombre de playlists : {$nbPlaylists}</p>
                 <p>Nombre total de pistes : {$nbTracks}</p>
-                <a href="?action=display-playlists">Mes playlists</a> |
-                <a href="?action=default">Accueil</a>
+                <a href="?action=change-password" class="btn">Changer le mot de passe</a>
+                <a href="?action=display-playlists" class="btn">Mes playlists</a> 
+                        </div>
             HTML;
 
 

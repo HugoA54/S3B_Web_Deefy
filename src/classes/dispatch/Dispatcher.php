@@ -14,6 +14,7 @@ use iutnc\deefy\action\LogoutAction;
 use iutnc\deefy\action\RenamePlaylistAction;
 use iutnc\deefy\action\DeletePlaylistAction;
 use iutnc\deefy\action\UserStatsAction;
+use iutnc\deefy\action\ChangePasswordAction;
 
 
 class Dispatcher
@@ -79,6 +80,11 @@ class Dispatcher
                 $action = new UserStatsAction();
                 $html = $action->execute();
                 break;
+                case 'change-password':
+    $action = new ChangePasswordAction();
+    $html = $action->execute();
+    break;
+
 
 
         }
