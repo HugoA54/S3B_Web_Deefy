@@ -29,7 +29,9 @@ class AddTrackAction extends Action
             $type = filter_var($_POST['type'], FILTER_SANITIZE_STRING);
             $file = $_FILES['userfile'];
 
-            $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/Web_projet/S3B_Web_Deefy/audio/';
+
+            $uploadDir = __DIR__ . '/../../../audio/';
+
             if (!is_dir($uploadDir)) {
                 return "<p>Dossier audio introuvable : {$uploadDir}</p>";
             }

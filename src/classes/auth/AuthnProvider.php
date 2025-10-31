@@ -35,6 +35,7 @@ class AuthnProvider {
 
         if (strlen($password) < 10) {
             throw new AuthnException("Le mot de passe doit contenir au moins 10 caractères.");
+            print 'Coucou';
         }
 
         $stmt = $pdo->prepare("SELECT email FROM user WHERE email = ?");

@@ -31,7 +31,14 @@ class AddUserAction extends Action {
                 AuthnProvider::register($email, $password);
                 return "<p>Inscription réussie pour $email. Vous pouvez maintenant vous connecter.</p>";
             } catch (AuthnException $e) {
-                return$e->getMessage();
+                $msg = $e->getMessage();
+
+                return <<<HTML
+                <div class="info-message">
+                    <p>$msg</p>
+                    <a href="?action=add-user" class="btn">Réessayer</a>
+                </div>
+                HTML;
             } 
         }
 

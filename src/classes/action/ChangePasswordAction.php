@@ -44,12 +44,20 @@ class ChangePasswordAction extends Action
             $confirm = $_POST['confirm_password'] ?? '';
 
             if ($new !== $confirm) {
-                return "Les nouveaux mots de passe ne correspondent pas.";
-            }
+       return <<<HTML
+                    <div class="info-message">
+                        <p>Les nouveaux mots de passe ne correspondent pas.</p>
+                        <a href="?action=change-password" class="btn">Réessayer</a>
+                    </div>
+                HTML;            }
 
             if (strlen($new) < 10) {
-                return "Le nouveau mot de passe doit contenir au moins 10 caractères.";
-            }
+        return <<<HTML
+                    <div class="info-message">
+                        <p>Le nouveau mot de passe doit contenir au moins 10 caractères.</p>
+                        <a href="?action=change-password" class="btn">Réessayer</a>
+                    </div>
+                HTML;            }
 
             $user = $_SESSION['user'];
             $repo = DeefyRepository::getInstance();
