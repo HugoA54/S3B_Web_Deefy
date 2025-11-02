@@ -33,8 +33,14 @@ class SigninAction extends Action
 
                 return "<p>Authentification réussie. Bienvenue, {$user['email']} !</p>";
             } catch (AuthnException $e) {
-                return "{$e->getMessage()}";
-            }
+  $msg = $e->getMessage();
+
+                return <<<HTML
+                <div class="info-message">
+                    <p>$msg</p>
+                    <a href="?action=signin" class="btn">Réessayer</a>
+                </div>
+                HTML;            }
 
         }
         return "<p>Méthode HTTP non supportée. Utilisez GET ou POST.</p>";
