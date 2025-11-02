@@ -5,10 +5,12 @@ use iutnc\deefy\auth\AuthnProvider;
 use iutnc\deefy\exception\AuthnException;
 use iutnc\deefy\repository\DeefyRepository;
 
+// Action permettant de gérer le changement de mot de passe
 class ChangePasswordAction extends Action
 {
     public function execute(): string
     {
+        // Si jamais l'utilisateur n'est pas connecté, on lui indique le problème
         if (!isset($_SESSION['user'])) {
             return <<<HTML
                 <div class="info-message">
@@ -18,6 +20,7 @@ class ChangePasswordAction extends Action
             HTML;
         }
 
+        // Permets à l'utilisateur de rentrer les données demandées pour changer de mot de passe
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             return <<<HTML
                 <h2>Changer le mot de passe</h2>
@@ -37,12 +40,14 @@ class ChangePasswordAction extends Action
                 <a href="?action=user-stats">Retour au profil</a>
             HTML;
         }
-
+        
+        // Envoie les données à la BD
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $old = $_POST['old_password'] ?? '';
             $new = $_POST['new_password'] ?? '';
             $confirm = $_POST['confirm_password'] ?? '';
 
+            // Si jamais le nouveau mot de passe ne correspond pas à la confirmation du nouveau mdp, on indique l'utilisateur
             if ($new !== $confirm) {
        return <<<HTML
                     <div class="info-message">
@@ -51,6 +56,7 @@ class ChangePasswordAction extends Action
                     </div>
                 HTML;            }
 
+            // Si jamais le nouveau mdp contient moins de 10 caractères, on indique l'utilisateur le problème
             if (strlen($new) < 10) {
         return <<<HTML
                     <div class="info-message">
@@ -58,15 +64,17 @@ class ChangePasswordAction extends Action
                         <a href="?action=change-password" class="btn">Réessayer</a>
                     </div>
                 HTML;            }
-
+            
             $user = $_SESSION['user'];
             $repo = DeefyRepository::getInstance();
             $pdo = $repo->getPDO();
-
+            
+            
             $stmt = $pdo->prepare("SELECT passwd FROM user WHERE id = ?");
             $stmt->execute([$user['id']]);
             $data = $stmt->fetch(\PDO::FETCH_ASSOC);
 
+            // Si jamais l'ancien mdp rentré n'est pas correct, on indique l'utilisateur le problème
             if (!$data || !password_verify($old, $data['passwd'])) {
                 return "Ancien mot de passe incorrect.";
             }

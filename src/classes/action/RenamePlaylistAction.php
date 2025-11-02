@@ -4,10 +4,12 @@ namespace iutnc\deefy\action;
 use iutnc\deefy\repository\DeefyRepository;
 use iutnc\deefy\auth\Authz;
 
+// Action gérant le renommage d'une playlist 
 class RenamePlaylistAction extends Action
 {
     public function execute(): string
     {
+        // Vérification qu'une playlist est courante
         if (!isset($_GET['id'])) return "<p>Aucune playlist sélectionnée.</p>";
 
         $id = (int) $_GET['id'];
@@ -17,6 +19,7 @@ class RenamePlaylistAction extends Action
         $repo = DeefyRepository::getInstance();
         $pdo = $repo->getPDO();
 
+        // Renommage de la playlist et sauvegarde du nouveau nom dans la BD
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $newName = filter_var(trim($_POST['name']), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $stmt = $pdo->prepare("UPDATE playlist SET nom = ? WHERE id = ?");

@@ -4,11 +4,13 @@ namespace iutnc\deefy\action;
 use iutnc\deefy\auth\AuthnProvider;
 use iutnc\deefy\repository\DeefyRepository;
 
+// Action gérant l'affichage des statistiques de l'utilisateur (disponibles dans le bouton "Profil")
 class UserStatsAction extends Action
 {
     public function execute(): string
     {
 
+        // Vérification que l'utilisateur est connecté
         if (!isset($_SESSION['user'])) {
             return <<<HTML
         <div class="info-message">
@@ -22,6 +24,7 @@ class UserStatsAction extends Action
         $repo = DeefyRepository::getInstance();
         $pdo = $repo->getPDO();
 
+        // "Calcul" des statistiques de l'utilisateur en se basant des données présentes dans la BD
         $stmt = $pdo->prepare("
                 SELECT 
                     COUNT(DISTINCT p.id) AS nb_playlists,
@@ -37,6 +40,7 @@ class UserStatsAction extends Action
         $nbPlaylists = (int) $data['nb_playlists'];
         $nbTracks = (int) $data['nb_tracks'];
 
+        // Affichage des statistiques de l'utilisateur
         return <<<HTML
                                 <div class="info-message">
                 <h2>Statistiques utilisateur</h2>

@@ -1,6 +1,7 @@
 <?php
 namespace iutnc\deefy\action;
 
+// Action par défaut ; Action exécutée lorsqu'un utilisateur lambda lance le site
 class DefaultAction extends Action
 {
     public function execute(): string

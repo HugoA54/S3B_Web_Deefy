@@ -4,10 +4,12 @@ namespace iutnc\deefy\action;
 use iutnc\deefy\repository\DeefyRepository;
 use iutnc\deefy\auth\AuthnProvider;
 
+// Action permettant de gérer l'ajout des playlists vides
 class AddEmptyPlaylistAction extends Action
 {
     public function execute(): string
     {
+        // Si utilisateur non connecté, on lui en informe
         if (!isset($_SESSION['user'])) {
             return <<<HTML
                 <div class="info-message">
@@ -18,6 +20,7 @@ class AddEmptyPlaylistAction extends Action
             HTML;
         }
 
+        // Permets à l'utilisateur de rentrer les données de sa nouvelle playlist vide
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             return <<<HTML
                 <h2>Créer une playlist vide</h2>
@@ -30,10 +33,13 @@ class AddEmptyPlaylistAction extends Action
                 <a href="?action=display-playlists">Retour à mes playlists</a>
             HTML;
         }
-
+        
+        // Envoie les données pour créer la playlist une fois que l'utiliseur appuye sur le submit du form
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Vérification que l'utilisateur a mis un nom correct à la playlist avec un filtre
             $name = filter_var(trim($_POST['name']), FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
+            // Vérification que l'utilisateur a mis un nom non vide
             if ($name === '') {
                 return "<p>Le nom de la playlist est obligatoire.</p>";
             }
@@ -41,9 +47,12 @@ class AddEmptyPlaylistAction extends Action
             $user = AuthnProvider::getSignedInUser();
             $repo = DeefyRepository::getInstance();
 
+            // Sauvegarde de la playlist vide dans la BD
             $playlistId = $repo->saveEmptyPlaylist($name);
 
+            // Si tout s'est bien passé et que la playlist a été sauvegardé dans la BD
             if ($playlistId !== null) {
+                // Mis à jour de la playlist courante
                 $_SESSION['current_playlist'] = [
                     'id'  => $playlistId,
                     'nom' => $name

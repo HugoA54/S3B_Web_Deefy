@@ -6,6 +6,7 @@ use iutnc\deefy\auth\Authz;
 use iutnc\deefy\repository\DeefyRepository;
 use iutnc\deefy\render\AudioListRenderer;
 
+// Action gérant l'affichage d'une playlist
 class DisplayPlaylistAction extends Action
 {
 

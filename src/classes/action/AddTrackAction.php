@@ -5,17 +5,19 @@ use iutnc\deefy\repository\DeefyRepository;
 use iutnc\deefy\audio\tracks\AlbumTrack;
 use iutnc\deefy\audio\tracks\PodcastTrack;
 
+// Action permettant de gérer l'ajout de tracks dans la playlist courante
 class AddTrackAction extends Action
 {
     public function execute(): string
-    {
+    {   
+        // S'il n'y a pas de playlist courante 
         if (!isset($_SESSION['current_playlist'])) {
             return <<<HTML
                 <p>Aucune playlist courante n’est sélectionnée.</p>
                 <a href="?action=display-playlists">Voir mes playlists</a>
             HTML;
         }
-
+        // Sinon, on enregistre l'id et le nom de playlist courante dans des variables
         $playlistId = $_SESSION['current_playlist']['id'];
         $playlistNom = $_SESSION['current_playlist']['nom'];
 
@@ -51,11 +53,14 @@ class AddTrackAction extends Action
                 $track = new AlbumTrack($audioPath, 0);
             }
 
+            // Sauvegarde du track dans la BD
             $repo = DeefyRepository::getInstance();
             $ok = $repo->saveTrack($track);
 
+            // Si la sauvegarde s'est bien passé
             if ($ok) {
                 $trackId = $repo->getPDO()->lastInsertId();
+                // Ajout de l'ID du track dans la bonne playlist dans la BD
                 $repo->addTrackToPlaylist((int) $trackId, (int) $playlistId, 1);
                 return <<<HTML
                     <p>Piste ajoutée avec succès à la playlist {$playlistNom}.</p>
@@ -66,6 +71,7 @@ class AddTrackAction extends Action
             }
         }
 
+        // Form permettant à l'utilisateur d'ajouter un Track
         $html .= <<<HTML
             <form method="POST" enctype="multipart/form-data">
                 <label for="type">Type de piste :</label><br>

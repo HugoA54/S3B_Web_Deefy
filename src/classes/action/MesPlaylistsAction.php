@@ -7,21 +7,23 @@ namespace iutnc\deefy\action;
 use iutnc\deefy\repository\DeefyRepository;
 use iutnc\deefy\auth\AuthnProvider;
 
+// Action permettant de gérer l'affichage de la liste de playlist (bouton "Mes Playtlists")
 class MesPlaylistsAction extends Action
 {
     public function execute(): string
     {
- if (!isset($_SESSION['user'])) {
-    return <<<HTML
-        <div class="info-message">
-            <p>Vous devez être connecté pour accéder à cette fonctionnalité.</p>
-            <a href="?action=signin" class="btn">Se connecter</a> 
-            <a href="?action=add-user" class="btn">Créer un compte</a>
-        </div>
-    HTML;
+        // Vérification que l'utilisateur est connecté
+        if (!isset($_SESSION['user'])) {
+            return <<<HTML
+                <div class="info-message">
+                    <p>Vous devez être connecté pour accéder à cette fonctionnalité.</p>
+                    <a href="?action=signin" class="btn">Se connecter</a> 
+                    <a href="?action=add-user" class="btn">Créer un compte</a>
+                </div>
+            HTML;
 }
 
-
+        // insertion des données liées à l'utilisateur connecté dans la variable $user
         $user = AuthnProvider::getSignedInUser();
      
 
@@ -38,8 +40,10 @@ class MesPlaylistsAction extends Action
                 ORDER BY p.id ASC
             ");
         $stmt->execute([$user['id']]);
+        // liste de toutes les playlists que possède l'utilisateur
         $playlists = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
+        // Si l'utilisateur ne possède aucune playlist, on lui propose d'en créer une
         if (empty($playlists)) {
             return <<<HTML
                     <div class="info">
@@ -49,6 +53,7 @@ class MesPlaylistsAction extends Action
                 HTML;
         }
 
+        // Création de la table où les playlists seront affichés
         $html = <<<HTML
                 <h2>Mes playlists</h2>
                 <table border="1" cellpadding="6" cellspacing="0">
@@ -59,7 +64,7 @@ class MesPlaylistsAction extends Action
                         <th>Gérer</th>
                     </tr>
             HTML;
-
+        // Affichage de chaque playlist une par une
         foreach ($playlists as $pl) {
             $id = (string) $pl['id'];
             $nom =$pl['nom'];

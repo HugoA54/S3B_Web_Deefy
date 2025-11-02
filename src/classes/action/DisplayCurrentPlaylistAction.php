@@ -4,10 +4,12 @@ namespace iutnc\deefy\action;
 use iutnc\deefy\repository\DeefyRepository;
 use iutnc\deefy\render\AudioListRenderer;
 
+// Action gérant l'affichage de la playlist courante
 class DisplayCurrentPlaylistAction extends Action
 {
     public function execute(): string
     {
+        // Si aucune playlist courante n'est selectionnée
         if (!isset($_SESSION['current_playlist'])) {
             return <<<HTML
                 <p>Aucune playlist courante n’est sélectionnée.</p>
@@ -15,6 +17,7 @@ class DisplayCurrentPlaylistAction extends Action
                 <a href="?action=add-empty-playlist">Créer une playlist</a>
             HTML;
         }
+
 
         $playlistInfo = $_SESSION['current_playlist'];
         $playlistId = (int) $playlistInfo['id'];
