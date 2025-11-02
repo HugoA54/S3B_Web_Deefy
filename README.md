@@ -1,20 +1,20 @@
-# \# Deefy - Projet (S3)
+# Deefy - Projet (S3)
 
 
 
-##### \## Binôme
+## Binôme
 
-\- Ilias Boudouah  
+- Ilias Boudouah  
 
-\- Hugo Antzorn
+- Hugo Antzorn
 
 
 
-##### \## Description
+## Description
 
 Application web PHP de gestion de playlists audio avec comptes utilisateurs, upload de pistes, statistiques et sécurité complète.
 
-
+## Installation
 
 ### 1 Cloner le projet dans le dossier de votre serveur local
 - git clone https://github.com/HugoA54/S3B_Web_Deefy.git
@@ -60,11 +60,10 @@ Exemple :
 
 
 
-##### \## Documents
+## Documents
 
-\- `rapport.pdf` → rapport détaillé avec tableau de bord et explications  
+- `rapport.pdf` → rapport détaillé avec tableau de bord et explications  
 
-\- `database.sql` → script de création et d’insertion
-
+- `database.sql` → script de création et d’insertion
 
 
