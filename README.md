@@ -28,16 +28,16 @@ Depuis phpMyAdmin : importer le fichier "database.sql"
 cp Config.db.exemple.ini Config.db.ini
 
 # 4 Ouvrir le fichier Config.db.ini et renseigner vos informations
-# Exemple :
-# driver=mysql
-# username=root
-# password=""
-# host=localhost
-# database=NomDeVotreBase
+Exemple :
+ driver=mysql
+ username=root
+ password=""
+ host=localhost
+ database=NomDeVotreBase
 
 # 5 Lancer votre serveur local (ex: XAMPP)
-# puis ouvrir le projet dans le navigateur :
-# http://localhost/S3B_Web_Deefy/
+ puis ouvrir le projet dans le navigateur :
+ http://localhost/S3B_Web_Deefy/
 
 
 
